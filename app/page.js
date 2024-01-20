@@ -3,15 +3,23 @@
 import { useState, useEffect } from "react";
 import { ApiClient } from "@/utils/ApiClient";
 import WeatherCard from "@/components/WeatherCard";
-import WeatherSearch from "@/components/WeatherSearch";
+
 import WeatherCardSmall from "@/components/WeatherCardSmall";
 import "../app/globals.css";
+
+// addition
+import SearchBar from '@/components/SearchBar'
 
 
 
 // Your Home component
 export default function Home() {
   const apiClient = new ApiClient();
+
+  // addition
+  const [weatherData, setWeatherData] = useState({});
+  const [selectedDay, setSelectedDay] = useState(0);
+
 
   // State to store weather data
   const [weather, setWeather] = useState({
@@ -58,6 +66,13 @@ export default function Home() {
   useEffect(() => {
     getThisWeekWeather();
   }, []);
+
+  const handleXClick = () => {
+    setWeatherData({});
+    setSelectedDay(0);
+  }
+
+
   // Display the weather information and image
   return (
     <main>
@@ -108,6 +123,10 @@ export default function Home() {
           ))}
           </div>
         </div>
+
+{/* addition */}
+        <SearchBar setWeatherData={setWeatherData} handleClick={handleXClick} />
+
       </main>
       );
       }
